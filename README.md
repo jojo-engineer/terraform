@@ -1,1 +1,39 @@
 # Terraform
+
+Terraform: is an Infrastructure as a Code (IaC) tool that allows users to define and provision data center infrastructure using a declarative configuration language.
+
+Note: before you begin an automation, make sure you have an idea of what you want to create.
+  - Manually create resources in the cloud and then do clickops (clicking around manually in the cloud console) to understand how the resources are created.
+  - When you have a good understanding of the resources, you can start automating the process using Terraform.
+
+Resource group: is a collection of resources that are managed together.
+
+
+########### Terraform Commands ###########
+terraform init: initializes a Terraform working directory, downloading the necessary provider plugins and setting up the backend.
+terraform plan: creates an execution plan, showing what actions Terraform will take to change the infrastructure to match the configuration.
+terraform apply: applies the changes required to reach the desired state of the configuration, creating or updating resources as necessary.
+terraform destroy: destroys the Terraform-managed infrastructure, removing all resources defined in the configuration.
+terraform fmt: formats Terraform configuration files to a canonical format and style.
+terraform validate: validates the Terraform configuration files for syntax errors and other issues.
+terraform output: displays the output values defined in the Terraform configuration.
+terraform import: imports existing infrastructure into Terraform management, allowing you to manage resources that were created outside of Terraform.
+terraform show: displays the current state of the Terraform-managed infrastructure, including resource attributes and metadata.
+terraform workspace: manages multiple workspaces, allowing you to have different states for different environments (e.g., development, staging, production).
+terraform taint: marks a resource for recreation during the next apply, forcing Terraform to destroy and recreate it.
+terraform state: manages the Terraform state file, allowing you to view, modify, or remove resources from the state.
+terraform providers: lists the providers used in the configuration, showing their versions and source locations.
+terraform graph: generates a visual representation of the dependency graph of the resources defined in the configuration.
+terraform console: opens an interactive console for evaluating expressions and inspecting the Terraform state.
+terraform workspace new: creates a new workspace with the specified name.
+terraform workspace select: switches to the specified workspace, allowing you to work with a different state.
+terraform workspace list: lists all available workspaces, showing the current active workspace.
+terraform workspace delete: deletes the specified workspace, removing its state and resources.
+terraform state list: lists all resources in the current Terraform state, showing their addresses and types.
+terraform state show: displays detailed information about a specific resource in the Terraform state, including its attributes and metadata.
+terraform state rm: removes a resource from the Terraform state, allowing you to stop managing it without destroying it.
+terraform state mv: moves a resource from one address to another in the Terraform state, allowing you to rename or reorganize resources.
+terraform state pull: retrieves the current state from the remote backend and saves it to a local file.
+terraform state push: uploads the local state file to the remote backend, updating the remote state with the local changes.
+terraform state replace-provider: replaces one provider with another in the Terraform state, allowing you to change the provider used for a resource.
+terraform state untaint: removes the taint mark from a resource, allowing it to be updated without being recreated.
