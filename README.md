@@ -136,3 +136,34 @@ output "example_output" {
   value       = "This is an example output"
   description = "An example output for demonstration purposes."
 }
+```
+
+---
+
+## What is Interpolation in Terraform?
+
+Interpolation in Terraform refers to the process of dynamically constructing strings using variables, resource attributes, and other expressions.  
+It allows you to create more flexible and reusable configurations by embedding values into strings.  
+Interpolation is typically done using the `${}` syntax, where you can include variables, resource attributes, and functions.
+
+### Example of Interpolation in Terraform
+
+```hcl
+variable "name" {
+  description = "The name of the resource"
+  type        = string
+  default     = "example"
+}
+
+resource "azurerm_virtual_network" "main" {
+  name                = "${var.name}-testnetwork" # example-testnetwork
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.joseph-rg.location
+  resource_group_name = azurerm_resource_group.joseph-rg.name
+}
+
+resource "azurerm_resource_group" "joseph-rg" {
+  name     = "${var.name}-${var.resource_group_name}" # example-technology-joseph-learning
+  location = var.location
+}
+```
