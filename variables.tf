@@ -1,7 +1,7 @@
-variable "vm-name" {
+variable "name" {
   type        = string
   description = "The name of the windows virtual machine."
-  default     = "windowsVM"
+  default     = "windows"
 }
 
 variable "admin_password" {

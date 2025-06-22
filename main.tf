@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "joseph-rg" {
-  name     = var.resource_group_name
+  name     = "${var.name}-${var.resource_group_name}"
   location = var.location
 }
 
@@ -62,7 +62,7 @@ resource "azurerm_network_interface_security_group_association" "example" {
 }
 
 resource "azurerm_windows_virtual_machine" "main" {
-  name                  = var.vm-name
+  name                  = "${var.name}VM"
   location              = azurerm_resource_group.joseph-rg.location
   resource_group_name   = azurerm_resource_group.joseph-rg.name
   network_interface_ids = [azurerm_network_interface.joseph.id]
