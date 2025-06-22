@@ -63,3 +63,76 @@ Here’s a list of commonly used Terraform commands:
 ---
 
 This README provides a structured overview of Terraform and its commands, making it easier to understand and use.
+
+
+## Day 2 – June 22, 2025
+
+### Variable Blocks in Terraform
+
+A **variable block** in Terraform is used to define input variables that can be passed to a Terraform configuration. This allows you to parameterize your infrastructure code, making it more flexible and reusable.
+
+#### Example Variable Block
+
+```hcl
+variable "example_variable" {
+  type        = string
+  description = "An example variable for demonstration purposes."
+  default     = "default_value"
+}
+```
+
+#### What is a Variable Block?
+
+A variable block in Terraform defines an input variable, specifying its type, description, and optionally a default value. These variables can be referenced throughout your Terraform configuration, allowing you to customize deployments without changing the code.
+
+---
+
+### Supported Data Types for Variables
+
+- **string**: A sequence of characters, often used for text.  
+  *Example:* `"Hello, World!"`
+
+- **number**: A numeric value, which can be an integer or a floating-point number.  
+  *Example:* `42` or `3.14`
+
+- **bool**: A boolean value, which can be either `true` or `false`.  
+  *Example:* `true` or `false`
+
+- **list**: An ordered collection of values, which can be of any type.  
+  *Example:* `["apple", "banana", "cherry"]`
+
+- **map**: A collection of key-value pairs, where keys are strings and values can be of any type.  
+  *Example:* `{"name": "John", "age": 30}`
+
+- **object**: A complex data structure that can contain multiple attributes, each with its own type.  
+  *Example:*
+  ```hcl
+  {
+    name      = "John Doe"
+    age       = 30
+    is_active = true
+  }
+  ```
+
+- **set**: An unordered collection of unique values, which can be of any type.  
+  *Example:* `{"apple", "banana", "cherry"}`
+
+- **tuple**: An ordered collection of values, where each value can be of a different type.  
+  *Example:* `[42, "Hello", true]`
+
+- **any**: A special type that can accept any value, regardless of its type.  
+  *Example:* Any value can be passed, such as a string, number, or
+
+## Output block
+
+### What is an output block in Terraform?
+
+An **output block** in Terraform is used to define outputs that can be displayed after the execution of a Terraform configuration. Outputs are useful for providing information about the resources created, such as their IDs or IP addresses.
+
+### Example of an output block in Terraform
+
+```hcl
+output "example_output" {
+  value       = "This is an example output"
+  description = "An example output for demonstration purposes."
+}
