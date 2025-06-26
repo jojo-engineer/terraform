@@ -67,3 +67,39 @@ variable "location" {
   type        = string
   description = "The Azure region where the virtual machine will be created."
 }
+
+variable "virtual_network_name" {
+  type = string
+  description = "The name of azure_virtual_network"
+  default = "testnetwork"
+}
+
+variable "azurerm_subnet_name" {
+  type = string
+  description = "The name of azurerm_subnet" 
+  default = "testinternal" 
+}
+
+variable "azurerm_public_ip_name" {
+  type = string
+  description = "The name of azurerm_public_ip"
+  default = "test-pip"
+}
+
+variable "azurerm_network_interface_name" {
+  type = string
+  description = "The name of azurerm_network_interface"
+  default = "network-group"
+}
+
+variable "ip_configuration_name" {
+  type = string
+  description = "The name of ip config"
+  default = "ip-config"
+}
+
+variable "azurerm_network_security_group_name" {
+  type = string
+  description = "The name of azurerm_network_security_group"
+  default = "TestSecurityGroup"
+}
