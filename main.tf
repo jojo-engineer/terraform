@@ -49,27 +49,33 @@ resource "azurerm_network_security_group" "joseph" {
   resource_group_name = azurerm_resource_group.joseph-rg.name
   tags                = var.tags
 
-  security_rule {
-    name                       = var.security_rule.name
-    priority                   = var.security_rule.priority
-    direction                  = var.security_rule.direction
-    access                     = var.security_rule.access
-    protocol                   = var.security_rule.protocol
-    source_port_range          = var.security_rule.source_port_range
-    destination_port_range     = var.security_rule.destination_port_range
-    source_address_prefix      = var.security_rule.source_address_prefix
-    destination_address_prefix = var.security_rule.destination_address_prefix
+  dynamic "security_rule" {
+    for_each = var.security_rules
+
+    content {
+      name                       = security_rule.value.name
+      priority                   = security_rule.value.priority
+      direction                  = security_rule.value.direction
+      access                     = security_rule.value.access
+      protocol                   = security_rule.value.protocol
+      source_port_range          = security_rule.value.source_port_range
+      destination_port_range     = security_rule.value.destination_port_range
+      source_address_prefix      = security_rule.value.source_address_prefix
+      destination_address_prefix = security_rule.value.destination_address_prefix
+    }
   }
 }
 
 resource "azurerm_network_interface_security_group_association" "example" {
   network_interface_id      = azurerm_network_interface.joseph.id
   network_security_group_id = azurerm_network_security_group.joseph.id
-
 }
 
 resource "azurerm_windows_virtual_machine" "main" {
-  name                  = "${var.name}VM"
+  for_each = toset([
+    "${var.name}VM-1",
+  ])
+  name                  = each.value
   location              = azurerm_resource_group.joseph-rg.location
   resource_group_name   = azurerm_resource_group.joseph-rg.name
   network_interface_ids = [azurerm_network_interface.joseph.id]

@@ -84,8 +84,8 @@ variable "ip_configuration" {
   }
 }
 
-variable "security_rule" {
-  type = object({
+variable "security_rules" {
+  type = list(object({
     name                       = string
     priority                   = number
     direction                  = string
@@ -95,19 +95,32 @@ variable "security_rule" {
     destination_port_range     = string
     source_address_prefix      = string
     destination_address_prefix = string
-  })
-  description = "The security rule for the network security group."
-  default = {
-    name                       = "test123"
-    priority                   = 1001
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "3389"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
+  }))
+
+  default = [
+    {
+      name                       = "test123"
+      priority                   = 1001
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_range     = "3389"
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
+    },
+    {
+      name                       = "Allow-HTTP"
+      priority                   = 100
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_range     = "80"
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
+    }
+  ]
 }
 
 variable "address_space" {
