@@ -68,38 +68,77 @@ variable "location" {
   description = "The Azure region where the virtual machine will be created."
 }
 
-variable "virtual_network_name" {
-  type = string
-  description = "The name of azure_virtual_network"
-  default = "testnetwork"
+variable "ip_configuration" {
+  type = object({
+    name                          = string
+    subnet_id                     = string
+    private_ip_address_allocation = string
+    public_ip_address_id          = string
+  })
+  description = "The IP configuration for the network interface."
+  default = {
+    name                          = "ip-config"
+    subnet_id                     = null
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = null
+  }
 }
 
-variable "azurerm_subnet_name" {
-  type = string
-  description = "The name of azurerm_subnet" 
-  default = "testinternal" 
+variable "security_rule" {
+  type = object({
+    name                       = string
+    priority                   = number
+    direction                  = string
+    access                     = string
+    protocol                   = string
+    source_port_range          = string
+    destination_port_range     = string
+    source_address_prefix      = string
+    destination_address_prefix = string
+  })
+  description = "The security rule for the network security group."
+  default = {
+    name                       = "test123"
+    priority                   = 1001
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "3389"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
 }
 
-variable "azurerm_public_ip_name" {
-  type = string
-  description = "The name of azurerm_public_ip"
-  default = "test-pip"
+variable "address_space" {
+  type        = list(string)
+  description = "The address space for the virtual network."
+  default     = ["10.0.0.0/16"]
 }
 
-variable "azurerm_network_interface_name" {
-  type = string
-  description = "The name of azurerm_network_interface"
-  default = "network-group"
+variable "address_prefixes" {
+  type        = list(string)
+  description = "The address prefixes for the subnet."
+  default     = ["10.0.1.0/24"]
 }
 
-variable "ip_configuration_name" {
-  type = string
-  description = "The name of ip config"
-  default = "ip-config"
+variable "allocation_method" {
+  type        = string
+  description = "The allocation method for the public IP address."
+  default     = "Static"
 }
 
-variable "azurerm_network_security_group_name" {
-  type = string
-  description = "The name of azurerm_network_security_group"
-  default = "TestSecurityGroup"
+variable "sku" {
+  type        = string
+  description = "The SKU for the public IP address."
+  default     = "Standard"
+}
+
+variable "tags" {
+  type        = map(string)
+  description = "A map of tags to assign to the resources."
+  default = {
+    Environment = "Dev"
+    Project     = "Joseph-learning"
+  }
 }
