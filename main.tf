@@ -1,64 +1,71 @@
 resource "azurerm_resource_group" "joseph-rg" {
   name     = "${var.name}-${var.resource_group_name}"
   location = var.location
+  tags     = var.tags
 }
 
 resource "azurerm_virtual_network" "main" {
-  name                = "${var.virtual_network_name}" 
-  address_space       = ["10.0.0.0/16"]
+  name                = "${var.name}-vnet"
+  address_space       = var.address_space
   location            = azurerm_resource_group.joseph-rg.location
   resource_group_name = azurerm_resource_group.joseph-rg.name
+  tags                = var.tags
 }
 
 resource "azurerm_subnet" "internal" {
-  name                 = "${var.azurerm_subnet_name}"
+  name                 = "${var.name}-subnet"
   resource_group_name  = azurerm_resource_group.joseph-rg.name
   virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes     = ["10.0.1.0/24"]
+  address_prefixes     = var.address_prefixes
+
 }
 
 resource "azurerm_public_ip" "joseph" {
-  name                = "${var.azurerm_public_ip_name}"
+  name                = "${var.name}-public-ip"
   resource_group_name = azurerm_resource_group.joseph-rg.name
   location            = azurerm_resource_group.joseph-rg.location
-  allocation_method   = "Static"
-  sku                 = "Standard"
+  allocation_method   = var.allocation_method
+  sku                 = var.sku
+  tags                = var.tags
 }
 
 resource "azurerm_network_interface" "joseph" {
-  name                = "${var.azurerm_network_interface_name}"
+  name                = "${var.name}-nic"
   location            = azurerm_resource_group.joseph-rg.location
   resource_group_name = azurerm_resource_group.joseph-rg.name
+  tags                = var.tags
 
   ip_configuration {
-    name                          = "${var.ip_configuration_name}"
+    name                          = "${var.name}-${var.ip_configuration.name}"
     subnet_id                     = azurerm_subnet.internal.id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = var.ip_configuration.private_ip_address_allocation
     public_ip_address_id          = azurerm_public_ip.joseph.id
   }
 }
 
 resource "azurerm_network_security_group" "joseph" {
-  name                = "${var.azurerm_network_security_group_name}"
+  name                = "${var.name}-nsg"
   location            = azurerm_resource_group.joseph-rg.location
   resource_group_name = azurerm_resource_group.joseph-rg.name
+  tags                = var.tags
 
   security_rule {
-    name                       = "test123"
-    priority                   = 1001
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "3389"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
+    name                       = var.security_rule.name
+    priority                   = var.security_rule.priority
+    direction                  = var.security_rule.direction
+    access                     = var.security_rule.access
+    protocol                   = var.security_rule.protocol
+    source_port_range          = var.security_rule.source_port_range
+    destination_port_range     = var.security_rule.destination_port_range
+    source_address_prefix      = var.security_rule.source_address_prefix
+    destination_address_prefix = var.security_rule.destination_address_prefix
   }
 }
 
 resource "azurerm_network_interface_security_group_association" "example" {
   network_interface_id      = azurerm_network_interface.joseph.id
   network_security_group_id = azurerm_network_security_group.joseph.id
+
 }
 
 resource "azurerm_windows_virtual_machine" "main" {
@@ -70,6 +77,7 @@ resource "azurerm_windows_virtual_machine" "main" {
   admin_username        = var.admin_username
   computer_name         = var.computer_name
   size                  = var.vm_size
+  tags                  = var.tags
 
   source_image_reference {
     publisher = var.source_image_reference.publisher
