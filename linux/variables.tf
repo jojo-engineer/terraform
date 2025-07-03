@@ -59,41 +59,13 @@ variable "allocation_method" {
 variable "size" {
   type        = string
   description = "The size of the virtual machine."
-  default     = "Standard_F2"
+  default     = "Standard_B1s"
 }
 
 variable "admin_username" {
   type        = string
   description = "The administrator username for the virtual machine."
   default     = "jojo"
-}
-
-variable "os_disk" {
-  type = object({
-    caching              = string
-    storage_account_type = string
-  })
-  description = "Configuration for the OS disk."
-  default = {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-}
-
-variable "source_image_reference" {
-  type = object({
-    publisher = string
-    offer     = string
-    sku       = string
-    version   = string
-  })
-  description = "The source image reference for the virtual machine."
-  default = {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts"
-    version   = "latest"
-  }
 }
 
 variable "security_rules" {
@@ -134,4 +106,47 @@ variable "security_rules" {
     }
   ]
 
+}
+
+variable "ssh_key" {
+  type = object({
+    username   = string
+    public_key = string
+  })
+
+  description = "The username and public key for admin_ssh_key"
+  default = {
+    username   = null
+    public_key = null
+  }
+}
+
+variable "disk" {
+  type = object({
+    caching              = string
+    storage_account_type = string
+  })
+
+  description = "The cache and storage account type of the os disk"
+  default = {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+}
+
+variable "image_reference" {
+  type = object({
+    publisher = string
+    offer     = string
+    sku       = string
+    version   = string
+  })
+
+  description = "The publisher, offer, sku and version of source image reference"
+  default = {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts"
+    version   = "latest"
+  }
 }

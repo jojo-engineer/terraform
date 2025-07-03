@@ -129,6 +129,10 @@ A variable block in Terraform defines an input variable, specifying its type, de
 
 An **output block** in Terraform is used to define outputs that can be displayed after the execution of a Terraform configuration. Outputs are useful for providing information about the resources created, such as their IDs or IP addresses.
 
+### Purpose of Output Block
+- Displays information to a user.
+- Exports data(information) to be used by another resource or modules.
+
 ### Example of an output block in Terraform
 
 ```hcl
@@ -165,5 +169,46 @@ resource "azurerm_virtual_network" "main" {
 resource "azurerm_resource_group" "joseph-rg" {
   name     = "${var.name}-${var.resource_group_name}" # example-technology-joseph-learning
   location = var.location
+}
+```
+
+---
+## Modules
+**Definition:** is a resusable, logical grouping of Terraform configuration files. <br>
+### Why Use a Module
+[x] `Reuse` infrastructure code. <br>
+[x] `Organize` complex infrastructure into manageable parts. <br>
+[x] `Share` and `version` infrastructure patters across projects. <br>
+[x] Improve `readability` and `maintainnability`.
+
+### Structure of  a Module
+At minimum, a module is just a folder with `.tf` files:
+Like ![linux](./linux/)
+
+```bash
+linux/
+├── main.tf
+├── outputs.tf
+├── provider.tf
+└── variables.tf
+```
+
+### Types of Modules
+1. Root Module (Parent) - The main terraform config in the current directory.  It begins with `resource`
+
+**Example:**
+```bash
+resource "label-type" "label-name" {
+param1 = ""
+param2 = ""
+}
+```
+
+2. Child Module - A module called from another module using the `module` block.
+
+```bash
+module "module-name" {
+source = "./linux" # where the root(parent) module is defined(local path(./folder_path), Git repo (git@github.com:jojo-engineer/terraform.git), terraform registry(terraform-azure/modules/vm/azure), etc.)
+param1 = "" # they may be optional or required
 }
 ```
