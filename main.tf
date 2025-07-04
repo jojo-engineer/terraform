@@ -5,7 +5,7 @@ module "linux-virtual-machine" {
   for_each = toset([
     "linux-vm-1"
   ])
-  source              = "./linux"
+  source              = "git::https://github.com/jojo-orgs/azure-linux.git?ref=v1.0.0"
   name                = each.key
   resource_group_name = "jojo-rg"
 
@@ -31,7 +31,7 @@ resource "azurerm_resource_provider_registration" "azureterraform" {
 ##  Create Keys (.pub and .pem)  ##
 ###################################
 module "security-keys" {
-  source    = "./keys"
+  source    = "git::https://github.com/jojo-orgs/azure-security-key.git?ref=v1.0.0"
   algorithm = "RSA"
   rsa_bits  = 4096
 }
