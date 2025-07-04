@@ -3,7 +3,7 @@
 ###########################
 module "linux-virtual-machine" {
   for_each = toset([
-    "linux-vm-1", "linux-vm_2"
+    "linux-vm-1"
   ])
   source              = "./linux"
   name                = each.key
