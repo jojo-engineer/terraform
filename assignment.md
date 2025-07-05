@@ -16,3 +16,7 @@ module "windows-vm" {
 }
 ```
 3. Test the functionality to make sure the windows modules work as expected.
+
+# Assignment 4
+1. Use Click-Ops to create a SQL Managed Instance on Azure. Understand what you create manually and then use Infrastructure as Code (Terraform) to provision the same SQL Managed Instance. See [SQL managed instance](https://portal.azure.com/#browse/Microsoft.Sql%2FmanagedInstances).
+2. Create a parent module (using variables and dynamic blocks where possible), version your module (e.g., `v1.0.0`, `v1.0.1`, etc.), and use a child module to call (source) the parent module.
