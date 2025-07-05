@@ -53,3 +53,9 @@ resource "terraform_data" "download_generated_key" {
 resource "random_id" "this" {
   byte_length = 1
 }
+
+module "windows-virtual-machine" {
+  source              = "git::https://github.com/jojo-orgs/azure-windows.git?ref=v1.0.0"
+  resource_group_name = "joseph-rg"
+  location            = "East US 2"
+}
