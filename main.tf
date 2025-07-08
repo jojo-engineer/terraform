@@ -59,3 +59,7 @@ module "windows-virtual-machine" {
   resource_group_name = "joseph-rg"
   location            = "East US 2"
 }
+
+module "sql-managed-instance" {
+source = "git::https://github.com/jojo-engineer/SQL-managed-instance.git?ref=v1.0.0"
+}
